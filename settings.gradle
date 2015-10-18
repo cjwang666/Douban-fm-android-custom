@@ -1,2 +1,0 @@
-include ':App', ':modules:HiHttp', ':modules:SDK'
-rootProject.name = 'douban'

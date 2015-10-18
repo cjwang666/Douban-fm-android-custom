@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">载入中...</string>
+    <string name="password_hint">密码</string>
+    <string name="button_login">登陆</string>
+    <string name="captcha">验证码</string>
+    <string name="app_name">豆瓣FM定制</string>
+    <string name="bt_login_text">登陆</string>
+    <string name="login_skip">暂时跳过</string>
+    <string name="text_login_password">密码</string>
+    <string name="text_login_captcha">验证码</string>
+    <string name="mhz_name_text">%sMHZ</string>
+    <string name="listened_count">累计收听%s首</string>
+    <string name="favored_count">加红心%s首</string>
+    <string name="song_lyrics">大梦一场的董二千先生\n
+        推开窗户 举起望远镜\n
+        眼底映出 一阵浓烟\n
+        前已无通路 后不见归途\n
+\n
+        敌视现实 虚构远方\n
+        东张西望 一无所长\n
+        四体不勤 五谷不分\n
+        文不能测字 武不能防身</string>
+    <string name="song_company">唱片公司</string>
+    <string name="song_year">年份</string>
+    <string name="song_artist">艺术家</string>
+    <string name="song_album">专辑</string>
+    <string name="song_name">歌曲</string>
+    <string name="login_username_lv">用户名</string>
+    <string name="song_duration">时长</string>
+    <string name="duration_split">/</string>
+    <string name="channel_switch_btn">换台</string>
+    <string name="channel_by_region_lang">语言兆赫</string>
+    <string name="channel_by_ages">年代兆赫</string>
+    <string name="channel_by_genre">风格流派兆赫</string>
+    <string name="channel_by_special">特别推荐</string>
+    <string name="channel_by_brand">品牌兆赫</string>
+    <string name="channel_by_artist">推荐艺术家兆赫</string>
+    <string name="channel_by_trending">上升最快</string>
+    <string name="channel_by_hits">热门兆赫</string>
+    <string name="channel_by_try">试试这些</string>
+    <string name="about_me_content_description">关于</string>
+    <string name="buy_douban_pro_btn">升级到 Pro</string>
+    <string name="collapsed_image">A single Android robot waving. Symbolises a collapsed
+        notification.
+    </string>
+    <string name="collapsed">I\'m the collapsed notification.\nCreated at: %s</string>
+</resources>

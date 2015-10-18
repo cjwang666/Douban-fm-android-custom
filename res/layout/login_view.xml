@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_marginLeft="@dimen/login_margin_left"
+              android:layout_marginRight="@dimen/login_margin_right"
+              android:background="@drawable/calendar_cover"
+        >
+
+    <EditText
+        android:id="@+id/login_username_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/edit_text"
+        android:focusable="true"
+        android:gravity="start"
+        android:hint="@string/login_username_lv"
+        android:inputType="textEmailAddress"
+        android:nextFocusDown="@+id/login_password_et"
+        android:singleLine="true" >
+
+        <requestFocus/>
+    </EditText>
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@drawable/dash_line"
+          android:hardwareAccelerated="false"
+            />
+
+    <EditText
+        android:id="@+id/login_password_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/edit_text"
+        android:focusable="true"
+        android:gravity="start"
+        android:hint="@string/text_login_password"
+        android:inputType="textPassword"
+        android:nextFocusDown="@+id/login_captcha_et"
+        android:nextFocusUp="@id/login_username_et"
+        android:singleLine="true" />
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@drawable/dash_line"
+          android:hardwareAccelerated="false"
+            />
+
+    <EditText
+        android:id="@+id/login_captcha_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/edit_text"
+        android:focusable="true"
+        android:gravity="start"
+        android:hint="@string/text_login_captcha"
+        android:nextFocusDown="@+id/captcha_image_view"
+        android:nextFocusUp="@id/login_password_et"
+        android:singleLine="true" />
+
+    <View android:id="@+id/captcha_dash_line" android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@drawable/dash_line"
+          android:hardwareAccelerated="false"
+            />
+
+    <RelativeLayout android:layout_width="333dp" android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp">
+        <ImageView android:layout_width="200dp" android:layout_height="30dp"
+                   android:layout_centerInParent="true"
+                   android:focusable="true"
+                   android:nextFocusUp="@+id/login_captcha_et"
+                   android:nextFocusDown="@+id/login_submit_btn"
+                   android:scaleType="fitXY"
+                   android:id="@+id/captcha_image_view"
+                />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="@android:style/Widget.Holo.ProgressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_bg_old"
+        android:focusable="true"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:minWidth="64dp"
+        android:nextFocusDown="@id/login_username_et"
+        android:nextFocusUp="@id/captcha_image_view"
+        android:text="@string/bt_login_text" />
+
+    <TextView android:layout_width="172dp" android:layout_height="24dp"
+              android:layout_marginBottom="20dp"
+              android:textColor="#FFE7CA"
+              android:id="@+id/login_skip"
+              android:text="@string/login_skip"
+              android:layout_marginTop="10dp"
+              android:gravity="center"
+            />
+
+</LinearLayout>
