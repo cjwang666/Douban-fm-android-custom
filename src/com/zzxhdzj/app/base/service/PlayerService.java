@@ -1,7 +1,9 @@
 package com.zzxhdzj.app.base.service;
 
 import com.zzxhdzj.douban.R;
+
 import java.util.List;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,7 +14,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -44,14 +50,15 @@ import com.zzxhdzj.http.Callback;
  * To change this template use File | Settings | File Templates.
  */
 public class PlayerService extends Service {
-    public static final String ACTION_PLAY = "play";
-    public static final String ACTION_PAUSE = "pause";
-    public static final String ACTION_SKIP = "skip";
-    public static final String ACTION_FAV = "fav";
-    public static final String ACTION_BAN = "ban";
-    public static final String ACTION_BIND_LISTENER = "bind_listener";
+	public static final int ACTION_PLAY = 1;
+	public static final int ACTION_PAUSE = 2;
+	public static final int ACTION_SKIP = 3;
+	public static final int ACTION_FAV = 4;
+	public static final int ACTION_BAN = 5;
+	public static final int ACTION_BIND_LISTENER = 6;
+	public static final int ACTION_UNFAV = 7;
+	
     private static final int PLAYING_NOTIFY_ID = 667667;
-    public static final String ACTION_UNFAV = "unfav";
     public static final int SHOW_REQUEST_CODE = 100;
     private static final int QUIT_REQUEST_CODE = 101;
     public static final String ACTION_CLOSE_APP = "action_close_app";
@@ -137,10 +144,6 @@ public class PlayerService extends Service {
             .bitmapConfig(Bitmap.Config.ARGB_8888)
             .build();
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
 
     @Override
     public void onCreate() {
@@ -178,50 +181,52 @@ public class PlayerService extends Service {
 
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) {
-            return START_STICKY;
-        }
-
-        String action = intent.getAction();
-        Log.i(DoubanFmApp.TAG, "Player Service onStart - " + action);
-        if (action.equals(ACTION_BIND_LISTENER)) {
-            List<PlayerEngineListener> playerEngineListeners = DoubanFmApp.getInstance().getPlayerEngineListeners();
-            if (playerEngineListeners != null) {
-                for (PlayerEngineListener listener:playerEngineListeners){
-                    mPlayerEngine.addPlayerEngineListener(listener);
-                }
+    /**
+     * Handler of incoming messages from clients.
+     */
+    class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+        	Log.i(DoubanFmApp.TAG, "Player Service Message "+ String.valueOf(msg.what));
+            switch (msg.what) {
+                case ACTION_BIND_LISTENER:                	
+                	List<PlayerEngineListener> playerEngineListeners = DoubanFmApp.getInstance().getPlayerEngineListeners();
+                    if (playerEngineListeners != null) {
+                        for (PlayerEngineListener listener:playerEngineListeners){
+                            mPlayerEngine.addPlayerEngineListener(listener);
+                        }
+                    }
+                    break;
+                case ACTION_BAN:
+                	mPlayerEngine.ban();
+                    break;
+                case ACTION_PLAY:
+                	mPlayerEngine.play();
+                    break;
+                case ACTION_SKIP:
+                	mPlayerEngine.skip();
+                    break;
+                case ACTION_FAV:
+                	mPlayerEngine.fav();
+                    break;
+                case ACTION_UNFAV:
+                	mPlayerEngine.unfav();
+                    break;
+                default:
+                    super.handleMessage(msg);
             }
-            return START_STICKY;
         }
-
-        if (action.equals(ACTION_BAN)) {
-            mPlayerEngine.ban();
-            return START_STICKY;
-        }
-
-        if (action.equals(ACTION_PLAY)) {
-            mPlayerEngine.play();
-            return START_STICKY;
-        }
-
-        if (action.equals(ACTION_SKIP)) {
-            mPlayerEngine.skip();
-            return START_STICKY;
-        }
-
-        if (action.equals(ACTION_FAV)) {
-            mPlayerEngine.fav();
-            return START_STICKY;
-        }
-        if (action.equals(ACTION_UNFAV)) {
-            mPlayerEngine.unfav();
-            return START_STICKY;
-        }
-        return super.onStartCommand(intent, flags, startId);
     }
-
+    /**
+     * Target we publish for clients to send messages to IncomingHandler.
+     */
+    final Messenger mMessenger = new Messenger(new IncomingHandler());
+    
+    @Override
+    public IBinder onBind(Intent intent) {
+    	return mMessenger.getBinder();
+    }
+    
     private void displayNotification(Song song) {
         Intent intent = new Intent(this, DoubanFm.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
