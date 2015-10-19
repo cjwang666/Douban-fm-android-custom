@@ -1,5 +1,7 @@
 package com.zzxhdzj.douban.db.tables;
 
+import android.net.Uri;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,10 +9,10 @@ package com.zzxhdzj.douban.db.tables;
  * Date: 6/5/14
  * To change this template use File | Settings | File Templates.
  */
-public class ChannelCategeryTable extends DbTable {
+public class ChannelCategeryContract extends DbTable {
         public static final String TABLE_NAME = "fm_channel_types";
-        //public static final Uri CONTENT_URI = Uri
-        //        .parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri
+                .parse("content://" + DbTable.AUTHORITY + "/" + ChannelCategeryContract.TABLE_NAME);
 
         public static String getInitializeDataSQL() {
             String initializeData = "insert into "+ TABLE_NAME +"("+

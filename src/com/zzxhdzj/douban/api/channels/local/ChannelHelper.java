@@ -12,7 +12,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 import com.zzxhdzj.douban.db.tables.ChannelTypes;
 import com.zzxhdzj.douban.modules.channel.Channel;
 import com.zzxhdzj.douban.providers.DoubanProvider;
@@ -43,11 +43,11 @@ public class ChannelHelper {
         public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
             if (loaderId == QUERY_STATIC_CHANNEL) {
                 String staticWhere = " category in ("+ChannelTypes.queryIndexString(true)+") ";
-                return new CursorLoader(context, DoubanProvider.CONTENT_URI_CHANNEL,
+                return new CursorLoader(context, ChannelContract.CONTENT_URI,
                         Channel.CHANNEL_PROJECTION, staticWhere,null , null);
             } else if (loaderId == QUERY_DYNAMIC_CHANNEL) {
                 String dynamicWhere = " category in ("+ChannelTypes.queryIndexString(false)+") ";
-                return new CursorLoader(context, DoubanProvider.CONTENT_URI_CHANNEL,
+                return new CursorLoader(context, ChannelContract.CONTENT_URI,
                         Channel.CHANNEL_PROJECTION, dynamicWhere,null, null);
             }
             return null;
@@ -82,16 +82,16 @@ public class ChannelHelper {
 
     public void update(Channel channel) {
         ContentValues value = new ContentValues();
-        value.put(ChannelTable.Columns.SONG_NUM, channel.songNum);
-        value.put(ChannelTable.Columns.NAME, channel.name);
-        value.put(ChannelTable.Columns.BANNER, channel.banner);
-        value.put(ChannelTable.Columns.INTRO, channel.intro);
-        value.put(ChannelTable.Columns.COVER, channel.cover);
+        value.put(ChannelContract.Columns.SONG_NUM, channel.songNum);
+        value.put(ChannelContract.Columns.NAME, channel.name);
+        value.put(ChannelContract.Columns.BANNER, channel.banner);
+        value.put(ChannelContract.Columns.INTRO, channel.intro);
+        value.put(ChannelContract.Columns.COVER, channel.cover);
         if (channel.category > 0) {
-            value.put(ChannelTable.Columns.CATEGORY_ID, channel.category);
+            value.put(ChannelContract.Columns.CATEGORY_ID, channel.category);
         }
-        String where = ChannelTable.Columns._ID + "=" + channel._id;
-        context.getContentResolver().update(DoubanProvider.CONTENT_URI_CHANNEL, value, where, null);
+        String where = ChannelContract.Columns._ID + "=" + channel._id;
+        context.getContentResolver().update(ChannelContract.CONTENT_URI, value, where, null);
     }
 
     /**
@@ -117,14 +117,14 @@ public class ChannelHelper {
         cursor.close();
         for (Channel channel : filteredToInsert) {
             ContentValues value = new ContentValues();
-            value.put(ChannelTable.Columns.CHANNEL_ID, channel.id);
-            value.put(ChannelTable.Columns.SONG_NUM, channel.songNum);
-            value.put(ChannelTable.Columns.NAME, channel.name);
-            value.put(ChannelTable.Columns.BANNER, channel.banner);
-            value.put(ChannelTable.Columns.INTRO, channel.intro);
-            value.put(ChannelTable.Columns.COVER, channel.cover);
-            value.put(ChannelTable.Columns.CATEGORY_ID, channel.category);
-            context.getContentResolver().insert(DoubanProvider.CONTENT_URI_CHANNEL, value);
+            value.put(ChannelContract.Columns.CHANNEL_ID, channel.id);
+            value.put(ChannelContract.Columns.SONG_NUM, channel.songNum);
+            value.put(ChannelContract.Columns.NAME, channel.name);
+            value.put(ChannelContract.Columns.BANNER, channel.banner);
+            value.put(ChannelContract.Columns.INTRO, channel.intro);
+            value.put(ChannelContract.Columns.COVER, channel.cover);
+            value.put(ChannelContract.Columns.CATEGORY_ID, channel.category);
+            context.getContentResolver().insert(ChannelContract.CONTENT_URI, value);
         }
         for (Channel channel : filteredToUpdate) {
             update(channel);

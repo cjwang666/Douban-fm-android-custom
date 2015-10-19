@@ -3,7 +3,7 @@ package com.zzxhdzj.app.channels;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 import com.zzxhdzj.douban.modules.channel.Channel;
 import com.zzxhdzj.douban.modules.channel.ChannelBuilder;
 import com.zzxhdzj.douban.providers.DoubanProvider;
@@ -29,7 +29,7 @@ public class ChannelUtil {
     public static Channel queryChannel(int channelId, Context context) {
 
         Cursor cursor = context.getContentResolver()
-                .query(DoubanProvider.CONTENT_URI_CHANNEL, Channel.CHANNEL_PROJECTION, ChannelTable.Columns.CHANNEL_ID + " = " + channelId, null, null);
+                .query(ChannelContract.CONTENT_URI, Channel.CHANNEL_PROJECTION, ChannelContract.Columns.CHANNEL_ID + " = " + channelId, null, null);
 
         Channel channel = null;
         try {

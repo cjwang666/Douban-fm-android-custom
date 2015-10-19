@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.zzxhdzj.app.DoubanFmApp;
 import com.zzxhdzj.douban.R;
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 import com.zzxhdzj.douban.modules.channel.Channel;
 import com.zzxhdzj.douban.providers.DoubanProvider;
 
@@ -63,8 +63,8 @@ public class ChannelListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
         if (loaderId == LOAD_ID_QUERY_CHANNELS_BY_CATEGORY) {
-            String selection = ChannelTable.Columns.CATEGORY_ID + " = ?";
-            return new CursorLoader(getActivity(), DoubanProvider.CONTENT_URI_CHANNEL,
+            String selection = ChannelContract.Columns.CATEGORY_ID + " = ?";
+            return new CursorLoader(getActivity(), ChannelContract.CONTENT_URI,
                     Channel.CHANNEL_PROJECTION,
                     selection, new String[]{categoryId},
                     null);

@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.zzxhdzj.douban.db.tables.ChannelCategeryTable;
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelCategeryContract;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 
 /**
  * Created with IntelliJ IDEA.
@@ -73,17 +73,17 @@ public class DoubanDb {
     }
 
     private static void createAllTables(SQLiteDatabase db) {
-    	db.execSQL(ChannelCategeryTable.getCreateSQL());
-        db.execSQL(ChannelTable.getCreateSQL());        
+    	db.execSQL(ChannelCategeryContract.getCreateSQL());
+        db.execSQL(ChannelContract.getCreateSQL());        
     }
     private static void initializeDatas(SQLiteDatabase db) {
-    	db.execSQL(ChannelCategeryTable.getInitializeDataSQL());
-        db.execSQL(ChannelTable.getInitializeDataSQL());
+    	db.execSQL(ChannelCategeryContract.getInitializeDataSQL());
+        db.execSQL(ChannelContract.getInitializeDataSQL());
     }
 
     private static void dropAllTables(SQLiteDatabase db) {
-    	db.execSQL(ChannelCategeryTable.getDropSQL());
-        db.execSQL(ChannelTable.getDropSQL());
+    	db.execSQL(ChannelCategeryContract.getDropSQL());
+        db.execSQL(ChannelContract.getDropSQL());
     }
 
     private static void resetAllTables(SQLiteDatabase db, int oldVersion,
@@ -97,8 +97,8 @@ public class DoubanDb {
     }
 
     private static void createAllIndexes(SQLiteDatabase db) {
-    	db.execSQL(ChannelCategeryTable.getCreateIndexSQL());
-        db.execSQL(ChannelTable.getCreateIndexSQL());
+    	db.execSQL(ChannelCategeryContract.getCreateIndexSQL());
+        db.execSQL(ChannelContract.getCreateIndexSQL());
     }
 
 

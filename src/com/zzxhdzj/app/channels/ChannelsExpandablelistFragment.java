@@ -31,8 +31,8 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.SimpleCursorTreeAdapter;
 
-import com.zzxhdzj.douban.db.tables.ChannelCategeryTable;
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelCategeryContract;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 import com.zzxhdzj.douban.providers.DoubanProvider;
 
 /**
@@ -41,14 +41,14 @@ import com.zzxhdzj.douban.providers.DoubanProvider;
 public class ChannelsExpandablelistFragment extends Fragment {
 
     private static final String[] CHANNEL_TYPE_PROJECTION = new String[] {
-    	ChannelCategeryTable.Columns.CHANNEL_TYPE_ID,
-        ChannelCategeryTable.Columns.ZH_NAME
+    	ChannelCategeryContract.Columns.CHANNEL_TYPE_ID,
+        ChannelCategeryContract.Columns.ZH_NAME
     };
     private static final int CHANNEL_TYPE_ID_COLUMN_INDEX = 0;
 
     private static final String[] CHANNEL_PROJECTION = new String[] {
-    	ChannelTable.Columns._ID,
-        ChannelTable.Columns.NAME
+    	ChannelContract.Columns._ID,
+        ChannelContract.Columns.NAME
     };
 
     private static final int TOKEN_GROUP = 0;
@@ -104,8 +104,8 @@ public class ChannelsExpandablelistFragment extends Fragment {
             //builder.appendEncodedPath(Contacts.Data.CONTENT_DIRECTORY);
             //Uri phoneNumbersUri = builder.build();
         	
-            mQueryHandler.startQuery(TOKEN_CHILD, groupCursor.getPosition(), DoubanProvider.CONTENT_URI_CHANNEL, 
-                    CHANNEL_PROJECTION, ChannelTable.Columns.CATEGORY_ID + "=?", 
+            mQueryHandler.startQuery(TOKEN_CHILD, groupCursor.getPosition(), ChannelContract.CONTENT_URI, 
+                    CHANNEL_PROJECTION, ChannelContract.Columns.CATEGORY_ID + "=?", 
                     new String[] { Integer.toString(groupCursor.getInt(CHANNEL_TYPE_ID_COLUMN_INDEX)) }, null);
 
             return null;
@@ -124,10 +124,10 @@ public class ChannelsExpandablelistFragment extends Fragment {
         mAdapter = new MyExpandableListAdapter(
         		getActivity(),
                 R.drawable.expandablelistview_groups,                
-                new String[] { ChannelCategeryTable.Columns.ZH_NAME }, // Name for group layouts
+                new String[] { ChannelCategeryContract.Columns.ZH_NAME }, // Name for group layouts
                 new int[] { R.id.textGroup },
                 R.drawable.expandablelistview_child,
-                new String[] { ChannelTable.Columns.NAME }, // Number for child layouts
+                new String[] { ChannelContract.Columns.NAME }, // Number for child layouts
                 new int[] { R.id.textChild });
 
         //setListAdapter(mAdapter);       
@@ -145,7 +145,7 @@ public class ChannelsExpandablelistFragment extends Fragment {
 		});*/
         mQueryHandler = new QueryHandler(getActivity(), mAdapter,expandableListView);
         // Query for people
-        mQueryHandler.startQuery(TOKEN_GROUP, null, DoubanProvider.CONTENT_URI_CHANNEL_TYPE, CHANNEL_TYPE_PROJECTION, 
+        mQueryHandler.startQuery(TOKEN_GROUP, null, ChannelCategeryContract.CONTENT_URI, CHANNEL_TYPE_PROJECTION, 
                 null, null, null);         
     }
     

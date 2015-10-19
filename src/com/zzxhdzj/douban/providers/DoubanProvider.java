@@ -14,8 +14,8 @@ import android.util.Log;
 
 import com.zzxhdzj.douban.Constants;
 import com.zzxhdzj.douban.db.DoubanDb;
-import com.zzxhdzj.douban.db.tables.ChannelCategeryTable;
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelCategeryContract;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 import com.zzxhdzj.douban.db.tables.DbTable;
 
 /**
@@ -27,17 +27,12 @@ import com.zzxhdzj.douban.db.tables.DbTable;
 public class DoubanProvider extends ContentProvider {	
     private static final UriMatcher URI_MATCHER;
     private static final int CHANNELS = 1;
-    private static final int CHANNEL_TYPES = 2;
-    
-    public static final Uri CONTENT_URI_CHANNEL_TYPE = Uri
-            .parse("content://" + DbTable.AUTHORITY + "/" + ChannelCategeryTable.TABLE_NAME);
-    public static final Uri CONTENT_URI_CHANNEL = Uri
-            .parse("content://" + DbTable.AUTHORITY + "/" + ChannelTable.TABLE_NAME);
+    private static final int CHANNEL_TYPES = 2;    
 
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(DbTable.AUTHORITY, ChannelCategeryTable.TABLE_NAME, CHANNEL_TYPES);
-        URI_MATCHER.addURI(DbTable.AUTHORITY, ChannelTable.TABLE_NAME, CHANNELS);        
+        URI_MATCHER.addURI(DbTable.AUTHORITY, ChannelCategeryContract.TABLE_NAME, CHANNEL_TYPES);
+        URI_MATCHER.addURI(DbTable.AUTHORITY, ChannelContract.TABLE_NAME, CHANNELS);        
     }
 
     private SQLiteOpenHelper dbHelper;
@@ -53,10 +48,10 @@ public class DoubanProvider extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         switch (URI_MATCHER.match(uri)) {
             case CHANNELS:
-                qb.setTables(ChannelTable.TABLE_NAME);
+                qb.setTables(ChannelContract.TABLE_NAME);
                 break;
             case CHANNEL_TYPES:
-                qb.setTables(ChannelCategeryTable.TABLE_NAME);
+                qb.setTables(ChannelCategeryContract.TABLE_NAME);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI:" + uri);
@@ -81,11 +76,11 @@ public class DoubanProvider extends ContentProvider {
         }
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if(URI_MATCHER.match(uri) == CHANNELS) {
-            long rowId = db.insert(ChannelTable.TABLE_NAME, null, values);
+            long rowId = db.insert(ChannelContract.TABLE_NAME, null, values);
             return ContentUris.withAppendedId(uri, rowId);
         }
         else if(URI_MATCHER.match(uri) == CHANNEL_TYPES) {
-            long rowId = db.insert(ChannelCategeryTable.TABLE_NAME, null, values);
+            long rowId = db.insert(ChannelCategeryContract.TABLE_NAME, null, values);
             return ContentUris.withAppendedId(uri, rowId);
         }
         throw new IllegalArgumentException("Unknown URI:" + uri);
@@ -96,9 +91,9 @@ public class DoubanProvider extends ContentProvider {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int count;
         if (URI_MATCHER.match(uri) == CHANNELS) {
-            count = db.delete(ChannelTable.TABLE_NAME, null, selectionArgs);
+            count = db.delete(ChannelContract.TABLE_NAME, null, selectionArgs);
         } else if (URI_MATCHER.match(uri) == CHANNEL_TYPES) {
-            count = db.delete(ChannelCategeryTable.TABLE_NAME, null, selectionArgs);
+            count = db.delete(ChannelCategeryContract.TABLE_NAME, null, selectionArgs);
         } else {
             throw new IllegalArgumentException("Unknown URI:" + uri);
         }
@@ -113,9 +108,9 @@ public class DoubanProvider extends ContentProvider {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int count;
         if (URI_MATCHER.match(uri) == CHANNELS) {
-            count = db.update(ChannelTable.TABLE_NAME, values, selection,selectionArgs);
+            count = db.update(ChannelContract.TABLE_NAME, values, selection,selectionArgs);
         } else if (URI_MATCHER.match(uri) == CHANNEL_TYPES) {
-            count = db.update(ChannelCategeryTable.TABLE_NAME, values, selection,selectionArgs);
+            count = db.update(ChannelCategeryContract.TABLE_NAME, values, selection,selectionArgs);
         } else {
             throw new IllegalArgumentException("Unknown URI:" + uri);
         }

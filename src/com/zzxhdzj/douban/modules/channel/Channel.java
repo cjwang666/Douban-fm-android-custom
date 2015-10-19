@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.zzxhdzj.douban.db.tables.ChannelTable;
+import com.zzxhdzj.douban.db.tables.ChannelContract;
 import com.zzxhdzj.douban.modules.Creator;
 
 /**
@@ -22,16 +22,16 @@ public class Channel implements Serializable{
     }
 
     public static final String[] CHANNEL_PROJECTION = new String[]{
-            ChannelTable.Columns._ID,
-            ChannelTable.Columns.CHANNEL_ID,
-            ChannelTable.Columns.SONG_NUM,
-            ChannelTable.Columns.NAME,
-            ChannelTable.Columns.BANNER,
-            ChannelTable.Columns.INTRO,
-            ChannelTable.Columns.HOT_SONGS,
-            ChannelTable.Columns.COVER,
-            ChannelTable.Columns.GENRE,
-            ChannelTable.Columns.CATEGORY_ID
+            ChannelContract.Columns._ID,
+            ChannelContract.Columns.CHANNEL_ID,
+            ChannelContract.Columns.SONG_NUM,
+            ChannelContract.Columns.NAME,
+            ChannelContract.Columns.BANNER,
+            ChannelContract.Columns.INTRO,
+            ChannelContract.Columns.HOT_SONGS,
+            ChannelContract.Columns.COVER,
+            ChannelContract.Columns.GENRE,
+            ChannelContract.Columns.CATEGORY_ID
     };
     public static final int ID_INDEX = 0;
     public static final int CHANNEL_ID_INDEX = 1;
